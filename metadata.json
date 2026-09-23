@@ -1,0 +1,6 @@
+{
+  "name": "Produção IBC Fortaleza",
+  "description": "Plataforma de gestão de voluntários e escalas de serviço para a equipe de Produção da Igreja Batista Central de Fortaleza.",
+  "requestFramePermissions": ["microphone"],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

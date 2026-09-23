@@ -1,0 +1,132 @@
+{
+  "entities": {
+    "ChurchEvent": {
+      "title": "ChurchEvent",
+      "description": "Church service or production event requiring technical crew",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "title": { "type": "string" },
+        "type": { "type": "string", "enum": ["sunday", "weekday"] },
+        "date": { "type": "string" },
+        "dates": { "type": "array" },
+        "time": { "type": "string" },
+        "location": { "type": "string" },
+        "description": { "type": "string" },
+        "status": { "type": "string", "enum": ["open_for_availability", "scheduled", "completed"] },
+        "requiredRoles": { "type": "array" },
+        "createdAt": { "type": "string" }
+      },
+      "required": ["title", "type", "date", "time", "location", "status", "requiredRoles"]
+    },
+    "Volunteer": {
+      "title": "Volunteer",
+      "description": "Technical volunteer registered in the production ministry",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "name": { "type": "string" },
+        "email": { "type": "string" },
+        "phone": { "type": "string" },
+        "roles": { "type": "array" },
+        "monthlySundayLimit": { "type": "number" },
+        "notes": { "type": "string" },
+        "fcmToken": { "type": "string" },
+        "createdAt": { "type": "string" }
+      },
+      "required": ["name", "phone", "roles", "monthlySundayLimit"]
+    },
+    "Schedule": {
+      "title": "Schedule",
+      "description": "Published technical crew roster for a specific church service",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "eventId": { "type": "string" },
+        "eventTitle": { "type": "string" },
+        "eventDate": { "type": "string" },
+        "eventTime": { "type": "string" },
+        "eventType": { "type": "string" },
+        "assignments": { "type": "array" },
+        "notes": { "type": "string" },
+        "leaderName": { "type": "string" },
+        "leaderId": { "type": "string" },
+        "createdAt": { "type": "string" },
+        "updatedAt": { "type": "string" }
+      },
+      "required": ["eventId", "eventTitle", "eventDate", "eventTime", "assignments"]
+    },
+    "AvailabilityResponse": {
+      "title": "AvailabilityResponse",
+      "description": "Monthly availability submitted by a volunteer",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "eventId": { "type": "string" },
+        "volunteerId": { "type": "string" },
+        "volunteerName": { "type": "string" },
+        "volunteerPhone": { "type": "string" },
+        "status": { "type": "string", "enum": ["available", "unavailable", "maybe"] },
+        "selectedDates": { "type": "array" },
+        "preferredRoles": { "type": "array" },
+        "restrictions": { "type": "string" },
+        "updatedAt": { "type": "string" }
+      },
+      "required": ["eventId", "volunteerId", "volunteerName", "status"]
+    },
+    "NotificationItem": {
+      "title": "NotificationItem",
+      "description": "Push notification or broadcast announcement for the team",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "title": { "type": "string" },
+        "body": { "type": "string" },
+        "target": { "type": "string" },
+        "targetRoleId": { "type": "string" },
+        "sentAt": { "type": "string" },
+        "read": { "type": "boolean" }
+      },
+      "required": ["title", "body", "target", "sentAt"]
+    },
+    "LeaderUser": {
+      "title": "LeaderUser",
+      "description": "Ministry leader or coordinator account",
+      "type": "object",
+      "properties": {
+        "uid": { "type": "string" },
+        "email": { "type": "string" },
+        "displayName": { "type": "string" },
+        "role": { "type": "string" },
+        "createdAt": { "type": "string" }
+      },
+      "required": ["uid", "email"]
+    }
+  },
+  "firestore": {
+    "/events/{eventId}": {
+      "schema": "ChurchEvent",
+      "description": "Church events and worship service listings"
+    },
+    "/volunteers/{volunteerId}": {
+      "schema": "Volunteer",
+      "description": "Registered production team volunteers"
+    },
+    "/schedules/{scheduleId}": {
+      "schema": "Schedule",
+      "description": "Assigned production team rosters"
+    },
+    "/availabilities/{availabilityId}": {
+      "schema": "AvailabilityResponse",
+      "description": "Availability responses submitted by volunteers"
+    },
+    "/notifications/{notificationId}": {
+      "schema": "NotificationItem",
+      "description": "Broadcast notifications and alerts"
+    },
+    "/leaders/{leaderId}": {
+      "schema": "LeaderUser",
+      "description": "Registered coordinators and leaders"
+    }
+  }
+}

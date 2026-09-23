@@ -1,0 +1,49 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // Events: readable by all, editable by team
+    match /events/{eventId} {
+      allow read, write: if true;
+    }
+
+    // Availability submissions: volunteers can submit and update their availability
+    match /availabilities/{availabilityId} {
+      allow read, write: if true;
+    }
+
+    // Volunteers directory: readable and manageable
+    match /volunteers/{volunteerId} {
+      allow read, write: if true;
+    }
+
+    // Rosters / Escalas: readable and manageable
+    match /schedules/{scheduleId} {
+      allow read, write: if true;
+    }
+
+    // Notifications: broadcast announcements and logs
+    match /notifications/{notificationId} {
+      allow read, write: if true;
+    }
+
+    // Leaders directory & accounts
+    match /leaders/{leaderId} {
+      allow read, write: if true;
+    }
+
+    // Attendance logs
+    match /attendance/{attendanceId} {
+      allow read, write: if true;
+    }
+
+    // Settings & Meta
+    match /settings/{docId} {
+      allow read, write: if true;
+    }
+
+    // Default rule for all app documents
+    match /{document=**} {
+      allow read, write: if true;
+    }
+  }
+}
